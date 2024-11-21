@@ -1,9 +1,17 @@
-package hashingAndDocumentation;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * SongRecord class that represents a song with various attributes like valence, year, artists, danceability, and more.
+ * It includes constructors for both the default and CSV string-based initialization, along with methods to retrieve and modify song attributes.
+ * This class also includes methods for equality comparison and hashing.
+ * 
+ * @author Hemant Kulkarni
+ * @date 11/18/24
+ */
 public class SongRecord {
+
     // Instance variables
     private double valence;
     private int year;
@@ -25,7 +33,11 @@ public class SongRecord {
     private double speechiness;
     private double tempo;
 
-    // Default constructor
+    /**
+     * Default constructor that initializes a song record with default values.
+     * Preconditions: None.
+     * Postconditions: A new SongRecord object is created with default attribute values, such as "Unknown Title" for name and 0 for numerical attributes.
+     */
     public SongRecord() {
         this.valence = 0.0;
         this.year = 0;
@@ -48,17 +60,19 @@ public class SongRecord {
         this.tempo = 0.0;
     }
 
-    // Constructor that takes a CSV string and parses it
+    /**
+     * Constructor that initializes a song record using a CSV string.
+     * The CSV string should be in the following format: <valence>,<year>,<acousticness>,<artists>,<danceability>,<durationMs>,<energy>,<explicit>,<id>,<instrumentalness>,<key>,<liveness>,<loudness>,<mode>,<name>,<popularity>,<releaseDate>,<speechiness>,<tempo>
+     * 
+     * Preconditions: The CSV string should contain the correct number of comma-separated fields (19 fields).
+     * Postconditions: A new SongRecord object is created with the values parsed from the CSV string.
+     * 
+     * @param data the CSV string containing song data
+     */
     public SongRecord(String data) {
         String[] fields = data.split(","); // Assuming comma-separated values
         
-    	//fields = data.split(",");//means no quotes in the record
-    	
-    	/*System.out.println("fields length " + fields.length);
-    	for(int i = 0; i < fields.length; i++) {
-        	System.out.println("fields " + i + " = " + fields[i]);
-        }*/
-    	this.valence = Double.parseDouble(fields[0]);
+        this.valence = Double.parseDouble(fields[0]);
         this.year = Integer.parseInt(fields[1]);
         this.acousticness = Double.parseDouble(fields[2]);
         this.artists = Arrays.asList(fields[3].replaceAll("[\\[\\]']", "").split(";"));
@@ -77,7 +91,6 @@ public class SongRecord {
         this.releaseDate = fields[16];
         this.speechiness = Double.parseDouble(fields[17]);
         this.tempo = Double.parseDouble(fields[18]);
-        
     }
 
     // Getters and setters for each field
@@ -138,7 +151,13 @@ public class SongRecord {
     public double getTempo() { return tempo; }
     public void setTempo(double tempo) { this.tempo = tempo; }
 
-    // toString method
+    /**
+     * Converts the SongRecord object to a string representation.
+     * Preconditions: None.
+     * Postconditions: A string representation of the SongRecord is returned.
+     * 
+     * @return a string representing the SongRecord object
+     */
     @Override
     public String toString() {
         return "SongRecord{" +
@@ -164,7 +183,14 @@ public class SongRecord {
                 '}';
     }
 
-    // equals method
+    /**
+     * Checks if two SongRecord objects are equal based on their attribute values.
+     * Preconditions: None.
+     * Postconditions: Returns true if the two SongRecord objects are identical based on their attribute values, otherwise false.
+     * 
+     * @param o the object to compare with
+     * @return true if the SongRecord objects are equal, otherwise false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,9 +217,4 @@ public class SongRecord {
                 Double.compare(that.tempo, tempo) == 0;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(valence, year, acousticness, artists, danceability, durationMs, energy, explicit, id,
-                instrumentalness, key, liveness, loudness, mode, name, popularity, releaseDate, speechiness, tempo);
-    }
-}
+
